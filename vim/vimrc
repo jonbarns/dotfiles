@@ -95,6 +95,8 @@ nnoremap <leader>s :setlocal spell!<cr>
 "Buffers"
 nnoremap <leader>b :bn<cr>
 "Windows"
+"Lines"
+nnoremap <C-j> i<cr><esc>
 
 "----Autocommands----"
 
@@ -109,4 +111,10 @@ au BufNewFile,BufRead *.py set fileformat=unix
 hi BadWhitespace ctermbg=red
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 au BufWritePost *.py call flake8#Flake8()
+
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
 
