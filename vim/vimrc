@@ -1,0 +1,112 @@
+set nocompatible
+
+"----Font configuration----"
+syntax on           "Coloured source"
+let python_highlight_all=1
+set showmatch       "Show matching parenthesis"
+set encoding=utf-8
+
+"----Window configuration----"
+set nu              "Include column numbers"
+set noshowmode      "Removed insert/replace bar at bottom"
+set shortmess+=c    "Removes autocomplete commands at bottom"
+set laststatus=2    "Adds lightline plugin"
+set textwidth=79
+
+"----Indents & Movement----"
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4                "1 tab == 4 spaces"
+set expandtab
+set smartindent
+set autoindent
+set copyindent					"Copy previous autoindent"
+set nowrap                      "Allow lines to go off screen"
+set backspace=indent,eol,start  "Backspace over indents, end of line chars"
+set foldmethod=indent
+set foldlevel=99
+
+"----Searching----"
+set smartcase           "Ignore case if all lower case, other do not"
+set magic               "Adds regex"
+set incsearch           "Incremental searching using /"
+set path+=**            "Search down into all subfolders & allow fuzzy finding"
+set wildmenu            "Display files when tab completing"
+set tags=./tags;$HOME   "Directory containing ctags"
+
+"----Remove sounds----"
+set noerrorbells
+
+"----Backups----"
+set noswapfile          "No intermediate swap files"
+set nobackup            "Do not keep backups"
+set nowb                "Do not write backup files
+set viminfo='20,\"80    "write .viminfo, don't store more than 80 lines"
+set undodir=~/.vim/undodir
+set undofile
+set history=500
+
+"----Copy----"
+set clipboard=unnamed
+
+"----Colour scheme----"
+colo desert
+hi Search ctermbg=36 ctermfg=white
+hi Pmenu cterm=none ctermbg=white ctermfg=black
+hi PmenuSel cterm=bold ctermbg=Black ctermfg=Red
+hi SpellBad cterm=underline ctermfg=Red ctermbg=none
+
+"----Plugin Configurations----"
+"airline bar"
+let g:airline_theme='night_owl'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.maxlinenr = ' ¶'
+let g:airline_symbols.linenr = ''
+let g:airline_left_sep = ''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_right_sep = ''
+let g:airline_skip_empty_sections = 1
+let g:airline_powerline_fonts = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+
+"gitgutter"
+let g:gitgutter_async=0
+highlight clear SignColumn
+
+"nerdtree"
+let NERDTreeIgnore=['\.pyc$', '\~$']
+
+"----Keybindings----"
+let mapleader = ","
+nnoremap ; :
+
+"Quick save"
+nnoremap <leader>w :w<cr>
+nnoremap <leader>q :wq<cr>
+nnoremap <leader>Q :q!<cr>
+"Show invisible chars"
+nnoremap <leader>I :set list!<cr>
+"Spell check toggle"
+nnoremap <leader>s :setlocal spell!<cr>
+
+"--Movement--"
+"Buffers"
+nnoremap <leader>b :bn<cr>
+"Windows"
+
+"----Autocommands----"
+
+"Latex"
+function! Update_pdf ()
+   silent exec "!pdflatex %" | redraw!
+endfunction
+au BufWritePost *.tex call Update_pdf()
+
+"Python"
+au BufNewFile,BufRead *.py set fileformat=unix
+hi BadWhitespace ctermbg=red
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufWritePost *.py call flake8#Flake8()
+
