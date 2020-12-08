@@ -37,16 +37,34 @@ set undodir^=$HOME/.vim/undo//      "Sets undo dir"
 "----Colorscheme----"
 colo gruvbox
 
+"----Terminal----"
+function! OpenTerminal()
+    split | terminal
+    resize 7
+endfunction
+
 "----Keybindings----"
 let mapleader = ","
 nnoremap ; :
 "--Saving--"
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :qa<cr>
+"--Movement--"
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 "--Text movement--"
 nnoremap <C-j> i<cr><esc>
 "--Files--"
 nnoremap <leader>ff :NERDTreeToggle<cr>
+"--Terminal--"
+nnoremap <C-n> :call OpenTerminal()<cr>
+tnoremap <Esc> <C-\><C-n>
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
 
 "----Code Specific----"
 "--Latex--"
@@ -87,8 +105,15 @@ let g:NERDTreeWinPos = 'right'
 let g:NERDTreeWinSize = '20'
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-autocmd VimEnter * if argc() == 1 | NERDTree | wincmd p | endif
-autocmd BufEnter * NERDTreeMirror
+augroup nerdstartup
+    au!
+    "Open nerd tree on startup"
+    au VimEnter * if argc() == 1 | NERDTree | wincmd p | endif
+    "Mirror nerdtree across buffers"
+    au BufEnter * NERDTreeMirror
+    " Automaticaly close nvim if NERDTree is only thing left open
+    au BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 "--gitgutter--"
 let g:gitgutter_async=0
 highlight clear SignColumn

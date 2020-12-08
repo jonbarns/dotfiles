@@ -5,6 +5,7 @@
 #define font3   DejaVu Sans Mono for Powerline
 #define font4   Noto Mono for Powerline
 #define font5   FiraCode Nerd Font Mono
+#define font6   TerminessTTF Nerd Font Mono
 
 !----Appearance----!
 URxvt*font:	xft:font1:size=13, xft:font2:size=13, xft:font3:size=13, xft:font5:size=13
