@@ -7,7 +7,7 @@ set showmatch       "Show matching parenthesis"
 set encoding=utf-8
 
 "----Window configuration----"
-set nu              "Include column numbers"
+set rnu             "Include column numbers"
 set noshowmode      "Removed insert/replace bar at bottom"
 set shortmess+=c    "Removes autocomplete commands at bottom"
 set laststatus=2    "Adds lightline plugin"
@@ -56,36 +56,13 @@ hi Pmenu cterm=none ctermbg=white ctermfg=black
 hi PmenuSel cterm=bold ctermbg=Black ctermfg=Red
 hi SpellBad cterm=underline ctermfg=Red ctermbg=none
 
-"----Plugin Configurations----"
-"airline bar"
-let g:airline_theme='night_owl'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.maxlinenr = ' ¶'
-let g:airline_symbols.linenr = ''
-let g:airline_left_sep = ''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_right_sep = ''
-let g:airline_skip_empty_sections = 1
-let g:airline_powerline_fonts = 1
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-
-"gitgutter"
-let g:gitgutter_async=0
-highlight clear SignColumn
-
-"nerdtree"
-let NERDTreeIgnore=['\.pyc$', '\~$']
-
 "----Keybindings----"
 let mapleader = ","
 nnoremap ; :
 
 "Quick save"
 nnoremap <leader>w :w<cr>
-nnoremap <leader>q :wq<cr>
-nnoremap <leader>Q :q!<cr>
+nnoremap <leader>q :qa<cr>
 "Show invisible chars"
 nnoremap <leader>I :set list!<cr>
 "Spell check toggle"
@@ -93,7 +70,6 @@ nnoremap <leader>s :setlocal spell!<cr>
 
 "--Movement--"
 "Buffers"
-nnoremap <leader>b :bn<cr>
 "Windows"
 "Lines"
 nnoremap <C-j> i<cr><esc>
@@ -118,3 +94,34 @@ augroup remember_folds
   autocmd BufWinEnter * silent! loadview
 augroup END
 
+"----Plugin Configurations----"
+"airline bar"
+let g:airline_theme='night_owl'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.maxlinenr = ' ¶'
+let g:airline_symbols.linenr = ''
+let g:airline_left_sep = ''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_right_sep = ''
+let g:airline_skip_empty_sections = 1
+let g:airline_powerline_fonts = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+
+"gitgutter"
+let g:gitgutter_async=0
+highlight clear SignColumn
+
+"nerdtree"
+let NERDTreeIgnore=['\.pyc$', '\~$']
+let NERDTreeShowHidden=1
+nnoremap <leader>f :NERDTreeToggle<CR>
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeWinPos = 'right'
+let g:NERDTreeWinSize = '20'
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+autocmd VimEnter * if argc() == 1 | NERDTree | wincmd p | endif
+autocmd BufEnter * NERDTreeMirror
