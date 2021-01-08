@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo rsync -aAX / --delete --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/*"} /home/jonathan/Backups/

@@ -17,6 +17,7 @@ set shiftwidth=4                "< and > == 4 spaces"
 set expandtab                   "Use spaces with tab"
 set nowrap                      "Allow lines to go off screen"
 set foldmethod=indent           "Will create folds under indents"
+set foldlevel=99                "Prevents autofolding"
 
 "----Searching----"
 set smartcase           "Ignore case if all lower case, otherwise do not"
@@ -30,9 +31,9 @@ set noerrorbells        "Remove that annoying sound"
 
 "----Backups----"
 "^= Makes vim check this first. // means save dir info
-set backupdir^=$HOME/.vim/backups// "Set backup file backup dir
-set directory^=$HOME/.vim/backups// "Sets swap file backup dir"
-set undodir^=$HOME/.vim/undo//      "Sets undo dir"
+set backupdir^=$HOME/.local/share/nvim/backups// "Set backup file backup dir
+set directory^=$HOME/.local/share/nvim/swap// "Sets swap file backup dir"
+set undodir=$HOME/.local/share/nvim/undo//      "Sets undo dir"
 
 "----Colorscheme----"
 colo gruvbox
@@ -71,7 +72,6 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 function! Update_pdf ()
    silent exec "!pdflatex %" | redraw!
 endfunction
-au BufWritePost *.tex call Update_pdf()
 
 "--Python--"
 set textwidth=79
@@ -98,6 +98,7 @@ let g:airline_symbols.linenr = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_skip_empty_sections = 1
+let g:airline#extensions#tabline#enabled = 1
 
 "--nerdtree--"
 let NERDTreeShowHidden=1
